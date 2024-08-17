@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Account{% endblock title %}
+{% block content %}
+
+
+<div class="row d-flex justify-content-center">
+    <div class="col-lg-8 table-responsive mb-5">
+                    <table class="table table-light table-borderless table-hover text-center mb-0">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="col-12">Please Active your account </th>
+                            </tr>
+                        </thead>
+                        <tbody class="align-middle">
+                            <tr>
+                                <td class="col-12">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-4">
+                                            <p class="d-flex align-items-start m-0">Hi,</p>
+                                            <p class="d-flex align-items-start m-0">{{user.first_name|capfirst}} {{user.last_name|capfirst}},</p>
+                                            <p class="d-flex align-items-start m-0">
+                                                Please Check Your
+                                                <a class="text-primary" href="https://mail.google.com/">
+                                                   <i class="fa fa-envelope mx-2"></i>
+                                                    Email
+                                                </a>
+                                            </p>
+                                            <p class="d-flex align-items-start m-0">Your Account has not been Activated</p>
+                                            <p class="d-flex align-items-start m-0">Please Activate Your Account and</p>
+                                            <p class="d-flex align-items-start m-0"><a class="text-primary mr-2" href="{% url 'account' %}"> Login</a> to our <a class="text-primary mx-2" href="{% url 'home' %}">MULTI SHOP</a></p>
+                                            <p>Thank You 👍.</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+</div>
+
+
+{% endblock content %}

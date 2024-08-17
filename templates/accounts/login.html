@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Account{% endblock title %}
+{% block content %}
+
+<!-- Breadcrumb Start -->
+<div class="container-fluid">
+	<div class="row px-xl-5">
+		<div class="col-12">
+			<nav class="breadcrumb bg-light mb-30">
+				<a class="breadcrumb-item text-dark" href="{% url 'home' %}"><i class="fa fa-home mx-2 pt-1"></i>Home</a>
+				<span class="breadcrumb-item text-primary">Account</span>
+			</nav>
+		</div>
+	</div>
+</div>
+<!-- Breadcrumb End -->
+
+<!--Login form -->
+<section class="section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-12">
+					<div class="row wrap">
+						<div class="col-md-6 img" style="background-image: url({%static 'img/bg-1.jpg' %});border-radius:25px 0 0 25px;"></div>
+						<div class="col-md-6" style="background: #b7b7b152;border-radius:0 25px 25px 0;">
+							<div class="col-12 row mx-2 nav nav-tabs">
+								<a onclick="$(this).removeClass('active').addClass('not-active');" class="col-6 text-decoration-none text-center nav-link active" data-toggle="tab" href="#login">Login</a>
+								<a onclick="$(this).removeClass('active').addClass('not-active');" class="col-6 text-decoration-none text-center nav-link" data-toggle="tab" href="#registration">Registration</a>
+							</div>
+							<div class="tab-content p-4">
+								<div class="tab-pane fade show active" id="login">
+									<div class="row justify-content-center">
+											<div class="line-heading h5 mb-4">Log In</div>
+									</div>
+
+									<form action="{% url 'account' %}" method="post" class="signin-form row justify-content-center">
+										{% csrf_token %}
+										<div class="form-group col-12 mb-3">
+											<label class="label ml-5" for="name">Username@email.com</label>
+
+											<div class="d-flex justify-content-center align-items-center">
+												<div style="border-radius:20px 0 0 20px;" class="btn border-0">
+													<i class="fa fa-at"></i>
+												</div>
+												<input type="email" id="name" name="username" class="form-control rounded" placeholder="Username" required>
+											</div>
+										</div>
+										<div class="form-group col-12 mb-3">
+											<label class="label ml-5" for="password_log">Password</label>
+											<div class="d-flex justify-content-center align-items-center">
+												<div style="border-radius:20px 0 0 20px;" class="btn border-0">
+													<i onclick="$(this).toggleClass('fa-eye fa-eye-slash')" id="eye_button" class="fa fa-eye-slash"></i>
+												</div>
+												<input type="password" id="password_log" name="password" class="form-control rounded" placeholder="Password" required>
+											</div>
+										</div>
+										<div class="form-group col-5">
+											<button type="submit" class="form-control btn btn-primary rounded submit px-3">Log In</button>
+										</div>
+										<div class="form-group col-12 d-flex justify-content-between">
+											<div>
+												<label class="checkbox-wrap checkbox-primary mb-0">Remember Me
+													<input type="checkbox" checked>
+													<span class="checkmark"></span>
+												</label>
+											</div>
+											<div>
+												<a onclick="$(this).removeClass('active').addClass('not-active');" data-toggle="tab" href="#forget_password">Forgot Password</a>
+											</div>
+										</div>
+									</form>
+
+								</div>
+								<div class="tab-pane fade" id="registration">
+									<div class="row justify-content-center">
+										<h3 class="mb-4">Create New Account</h3>
+									</div>
+
+									<form action="{% url 'registration' %}" method="post" class="signin-form">
+										{% csrf_token %}
+										<div class="row justify-content-center">
+											<div class="col-md-6 form-group">
+												<label>First Name</label>
+												<input name="first_name" class="form-control rounded" type="text" placeholder="name" required>
+											</div>
+											<div class="col-md-6 form-group">
+												<label>Last Name</label>
+												<input name="last_name" class="form-control rounded" type="text" placeholder="name" required>
+											</div>
+											<div class="col-md-12 form-group">
+												<label class="ml-5">E-mail</label>
+												<div class="d-flex justify-content-center align-items-center">
+													<div style="border-radius:20px 0 0 20px;" class="btn border-0">
+														<i class="fa fa-at"></i>
+													</div>
+													<input name="reg-email" class="form-control rounded" type="text" placeholder="example@email.com" required>
+												</div>
+											</div>
+											<div class="col-md-12 form-group">
+												<label class="ml-5">Mobile</label>
+												<div class="d-flex justify-content-center align-items-center">
+													<div style="border-radius:20px 0 0 20px;" class="btn border-0">
+														<i class="fas fa-phone"></i>
+													</div>
+													<input name="mobile" class="form-control rounded" type="text" placeholder="+880" required>
+												</div>
+											</div>
+
+											<div class="col-md-12 form-group">
+												<label class="ml-5">Create Password</label>
+												<div class="d-flex">
+													<button style="border-radius:20px 0 0 20px;" class="btn border-0" type="button">
+														<i onclick="$(this).toggleClass('fa-eye fa-eye-slash')" id="eye_button1" class="fa fa-eye-slash"></i>
+													</button>
+													<input id="password_log1" name="reg-password" class="form-control rounded" type="password" placeholder="create a strong password" required>
+												</div>
+											</div>
+											<div class="col-md-12 form-group">
+												<label class="ml-5">Confirm Password</label>
+												<div class="d-flex">
+													<button style="border-radius:20px 0 0 20px;" class="btn border-0" type="button">
+													<i onclick="$(this).toggleClass('fa-eye fa-eye-slash')" id="eye_button2" class="fa fa-eye-slash"></i>
+													</button>
+													<input id="password_log2" name="reg-confirm_password" class="form-control rounded" type="password" placeholder="confirm password" required>
+												</div>
+											</div>
+
+											<div class="col-md-6 form-group py-4">
+												<button type="submit" class="form-control btn btn-primary rounded submit px-3">Submit</button>
+											</div>
+										</div>
+									</form>
+
+								</div>
+								<div class="tab-pane fade" id="forget_password">
+									<div class="d-flex">
+										<div class="row">
+											<h3 class="mb-4">Find Your Account</h3>
+										</div>
+									</div>
+									<form action="{% url 'forget_password' %}" method="get" class="signin-form">
+										<div class="row">
+											<div class="col-md-12 form-group">
+												<label class="ml-5">E-mail</label>
+												<div class="d-flex justify-content-center align-items-center">
+													<div style="border-radius:20px 0 0 20px;" class="btn border-0">
+														<i class="fa fa-at"></i>
+													</div>
+													<input class="form-control" name="forget_email" type="email" placeholder="example@email.com" required>
+												</div>
+											</div>
+											<div class="col-md-12 form-group py-4">
+											<button type="submit" class="form-control btn btn-primary rounded submit px-3">Search</button>
+										</div>
+										</div>
+									</form>
+		        				</div>
+							</div>
+						</div>
+		      		</div>
+				</div>
+			</div>
+		</div>
+	</section>
+<!--Login form -->
+
+
+
+{% endblock content %}

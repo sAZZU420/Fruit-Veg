@@ -1,0 +1,371 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Account{% endblock title %}
+{% block content %}
+
+<!-- Breadcrumb Start -->
+<div class="container-fluid">
+	<div class="row px-xl-5">
+		<div class="col-12">
+			<nav class="breadcrumb bg-light mb-30">
+				<a class="breadcrumb-item text-dark" href="{% url 'home' %}"><i class="fa fa-home mx-2 pt-1"></i>Home</a>
+				<a class="breadcrumb-item text-dark" href="{% url 'dashboard' %}">Dashboard</a>
+				<span class="breadcrumb-item text-primary">Profile</span>
+			</nav>
+		</div>
+	</div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Profile 1 - Bootstrap Brain Component -->
+<section class="bg-light py-3 py-md-5 py-xl-8">
+
+  <div class="container">
+    <div class="row gy-4 gy-lg-0">
+      <div class="col-12 col-lg-4 col-xl-3">
+        <div class="row gy-4">
+          <div class="col-12">
+            <div class="card widget-card border-light shadow-sm">
+              {% if request.user.is_authenticated %}
+              <div class="card-header text-bg-primary">Welcome, {{request.user}}</div>
+              {% else %}
+              <div class="card-header text-bg-primary">Welcome, user</div>
+              {% endif %}
+              <div class="card-body">
+                <div class="text-center mb-3">
+                  <img src="{% static 'img/favicon.ico' %}" class="img-fluid rounded-circle" alt="Luna John">
+                </div>
+                <h5 class="text-center mb-1">Ethan Leo</h5>
+                <p class="text-center text-dark mb-4">Project Manager</p>
+                <ul class="list-group list-group-flush mb-4">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <h6 class="m-0"><i class="fa fa-shopping-cart mx-1"></i>Cart</h6>
+                    <span>7,854</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <h6 class="m-0"><i class="fa fa-list mx-1"></i>Order</h6>
+                    <span>5,987</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <h6 class="m-0"><i class="fa fa-car mx-1"></i>One The Way</h6>
+                    <span>4,620</span>
+                  </li>
+                </ul>
+                <div class="d-grid m-0">
+                  <button class="btn btn-outline-primary" type="button">Follow</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card widget-card border-light shadow-sm">
+              <div class="card-header text-bg-primary">Social Accounts</div>
+              <div class="card-body">
+                <a href="#!" class="d-inline-block link-light lh-1 p-2 rounded">
+                  <svg class="w-6 h-6 text-danger dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M21.7 8.037a4.26 4.26 0 0 0-.789-1.964 2.84 2.84 0 0 0-1.984-.839c-2.767-.2-6.926-.2-6.926-.2s-4.157 0-6.928.2a2.836 2.836 0 0 0-1.983.839 4.225 4.225 0 0 0-.79 1.965 30.146 30.146 0 0 0-.2 3.206v1.5a30.12 30.12 0 0 0 .2 3.206c.094.712.364 1.39.784 1.972.604.536 1.38.837 2.187.848 1.583.151 6.731.2 6.731.2s4.161 0 6.928-.2a2.844 2.844 0 0 0 1.985-.84 4.27 4.27 0 0 0 .787-1.965 30.12 30.12 0 0 0 .2-3.206v-1.516a30.672 30.672 0 0 0-.202-3.206Zm-11.692 6.554v-5.62l5.4 2.819-5.4 2.801Z" clip-rule="evenodd"/>
+                  </svg>
+                </a>
+                <a href="#!" class="d-inline-block  link-light lh-1 p-2 rounded">
+                  <svg class="w-6 h-6 text-info dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M22 5.892a8.178 8.178 0 0 1-2.355.635 4.074 4.074 0 0 0 1.8-2.235 8.343 8.343 0 0 1-2.605.981A4.13 4.13 0 0 0 15.85 4a4.068 4.068 0 0 0-4.1 4.038c0 .31.035.618.105.919A11.705 11.705 0 0 1 3.4 4.734a4.006 4.006 0 0 0 1.268 5.392 4.165 4.165 0 0 1-1.859-.5v.05A4.057 4.057 0 0 0 6.1 13.635a4.192 4.192 0 0 1-1.856.07 4.108 4.108 0 0 0 3.831 2.807A8.36 8.36 0 0 1 2 18.184 11.732 11.732 0 0 0 8.291 20 11.502 11.502 0 0 0 19.964 8.5c0-.177 0-.349-.012-.523A8.143 8.143 0 0 0 22 5.892Z" clip-rule="evenodd"/>
+                  </svg>
+                </a>
+                <a href="#!" class="d-inline-block link-light lh-1 p-2 rounded">
+                  <svg class="w-6 h-6 text-info dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z" clip-rule="evenodd"/>
+                  </svg>
+                </a>
+                <a href="#!" class="d-inline-block link-light lh-1 p-2 rounded">
+                 <svg class="w-6 h-6 text-info dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M12.51 8.796v1.697a3.738 3.738 0 0 1 3.288-1.684c3.455 0 4.202 2.16 4.202 4.97V19.5h-3.2v-5.072c0-1.21-.244-2.766-2.128-2.766-1.827 0-2.139 1.317-2.139 2.676V19.5h-3.19V8.796h3.168ZM7.2 6.106a1.61 1.61 0 0 1-.988 1.483 1.595 1.595 0 0 1-1.743-.348A1.607 1.607 0 0 1 5.6 4.5a1.601 1.601 0 0 1 1.6 1.606Z" clip-rule="evenodd"/>
+                    <path d="M7.2 8.809H4V19.5h3.2V8.809Z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card widget-card border-light shadow-sm">
+              <div class="card-header text-bg-primary">About Me</div>
+              <div class="card-body">
+                <ul class="list-group list-group-flush mb-0">
+                  <li class="list-group-item">
+                    <h6 class="mb-1">
+                      <svg class="w-6 h-6 text-gray-800 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v13H7a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h12M9 3v14m7 0v4"/>
+                      </svg>
+                      Education
+                    </h6>
+                    <span>M.S Computer Science</span>
+                  </li>
+                  <li class="list-group-item">
+                    <h6 class="mb-1">
+                      <svg class="w-6 h-6 text-gray-800 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M11.906 1.994a8.002 8.002 0 0 1 8.09 8.421 7.996 7.996 0 0 1-1.297 3.957.996.996 0 0 1-.133.204l-.108.129c-.178.243-.37.477-.573.699l-5.112 6.224a1 1 0 0 1-1.545 0L5.982 15.26l-.002-.002a18.146 18.146 0 0 1-.309-.38l-.133-.163a.999.999 0 0 1-.13-.202 7.995 7.995 0 0 1 6.498-12.518ZM15 9.997a3 3 0 1 1-5.999 0 3 3 0 0 1 5.999 0Z" clip-rule="evenodd"/>
+                      </svg>
+                      Location
+                    </h6>
+                    <span>Mountain View, California</span>
+                  </li>
+                  <li class="list-group-item">
+                    <h6 class="mb-1">
+                      <svg class="w-6 h-6 text-gray-800 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h12M6 4v16M6 4H5m13 0v16m0-16h1m-1 16H6m12 0h1M6 20H5M9 7h1v1H9V7Zm5 0h1v1h-1V7Zm-5 4h1v1H9v-1Zm5 0h1v1h-1v-1Zm-3 4h2a1 1 0 0 1 1 1v4h-4v-4a1 1 0 0 1 1-1Z"/>
+                      </svg>
+                      Company
+                    </h6>
+                    <span>GitHub Inc</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-8 col-xl-9">
+        <div class="card widget-card border-light shadow-sm">
+          <div class="card-body p-4">
+            <ul class="nav nav-tabs" id="profileTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="overview-tab" data-toggle="tab" data-target="#overview-tab-pane" type="button" role="tab" aria-controls="overview-tab-pane" aria-selected="true">Overview</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="email-tab" data-toggle="tab" data-target="#email-tab-pane" type="button" role="tab" aria-controls="email-tab-pane" aria-selected="false">Emails</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="password-tab" data-toggle="tab" data-target="#password-tab-pane" type="button" role="tab" aria-controls="password-tab-pane" aria-selected="false">Password</button>
+              </li>
+            </ul>
+            <div class="tab-content pt-4" id="profileTabContent">
+              <div class="tab-pane fade show active" id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab" tabindex="0">
+                <h5 class="mb-3">About</h5>
+                <p class="lead mb-3">Ethan Leo is a seasoned and results-driven Project Manager who brings experience and expertise to project management. With a proven track record of successfully delivering complex projects on time and within budget, Ethan Leo is the go-to professional for organizations seeking efficient and effective project leadership.</p>
+                <h5 class="mb-3">Profile</h5>
+                <div class="row g-0">
+                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                    <div class="p-2">First Name</div>
+                  </div>
+                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                    <div class="p-2">Ethan</div>
+                  </div>
+                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                    <div class="p-2">Last Name</div>
+                  </div>
+                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                    <div class="p-2">Leo</div>
+                  </div>
+                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                    <div class="p-2">Education</div>
+                  </div>
+                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                    <div class="p-2">M.S Computer Science</div>
+                  </div>
+                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                    <div class="p-2">Address</div>
+                  </div>
+                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                    <div class="p-2">Mountain View, California</div>
+                  </div>
+                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                    <div class="p-2">Country</div>
+                  </div>
+                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                    <div class="p-2">United States</div>
+                  </div>
+                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                    <div class="p-2">Job</div>
+                  </div>
+                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                    <div class="p-2">Project Manager</div>
+                  </div>
+                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                    <div class="p-2">Company</div>
+                  </div>
+                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                    <div class="p-2">GitHub Inc</div>
+                  </div>
+                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                    <div class="p-2">Phone</div>
+                  </div>
+                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                    <div class="p-2">+1 (248) 679-8745</div>
+                  </div>
+                  <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                    <div class="p-2">Email</div>
+                  </div>
+                  <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                    <div class="p-2">leo@example.com</div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                <form action="#!" class="row gy-3 gy-xxl-4">
+                  <div class="col-12">
+                    <div class="row gy-2">
+                      <label class="col-12 form-label m-0">Profile Image</label>
+                      <div class="col-12">
+                        <img src="./assets/img/profile-img-1.jpg" class="img-fluid" alt="Luna John">
+                      </div>
+                      <div class="col-12">
+                        <a href="#!" class="d-inline-block bg-primary link-light lh-1 p-2 rounded">
+                          <i class="fa fa-upload"></i>
+                        </a>
+                        <a href="#!" class="d-inline-block bg-danger link-light lh-1 p-2 rounded">
+                          <i class="fa fa-trash"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="inputFirstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="inputFirstName" value="Ethan">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="inputLastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="inputLastName" value="Leo">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="inputEducation" class="form-label">Education</label>
+                    <input type="text" class="form-control" id="inputEducation" value="M.S Computer Science">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="inputSkills" class="form-label">Skills</label>
+                    <input type="text" class="form-control" id="inputSkills" value="HTML, SCSS, Javascript, React, Vue, Angular, UI, UX">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="inputJob" class="form-label">Job</label>
+                    <input type="text" class="form-control" id="inputJob" value="Project Manager">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="inputCompany" class="form-label">Company</label>
+                    <input type="text" class="form-control" id="inputCompany" value="GitHub Inc">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="inputPhone" class="form-label">Phone</label>
+                    <input type="tel" class="form-control" id="inputPhone" value="+12486798745">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="inputEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="inputEmail" value="leo@example.com">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="inputAddress" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="inputAddress" value="Mountain View, California">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="inputCountry" class="form-label">Country</label>
+                    <select class="form-select" id="inputCountry">
+                      <option value="Afghanistan">Afghanistan</option>
+                      <option value="Argentina">Argentina</option>
+                      <option value="Bangladesh">Bangladesh</option>
+                      <option value="India">India</option>
+                      <option value="Indonesia">Indonesia</option>
+                      <option value="Iraq">Iraq</option>
+                      <option value="Japan">Japan</option>
+                      <option value="Mexico">Mexico</option>
+                      <option value="Nepal">Nepal</option>
+                      <option value="New Zealand">New Zealand</option>
+                      <option value="Pakistan">Pakistan</option>
+                      <option value="Saudi Arabia">Saudi Arabia</option>
+                      <option value="Sri Lanka">Sri Lanka</option>
+                    </select>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="inputYouTube" class="form-label">YouTube</label>
+                    <input type="text" class="form-control" id="inputYouTube" value="https://www.youtube.com/EthanLeo">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="inputX" class="form-label">X</label>
+                    <input type="text" class="form-control" id="inputX" value="https://twitter.com/EthanLeo">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="inputFacebook" class="form-label">Facebook</label>
+                    <input type="text" class="form-control" id="inputFacebook" value="https://www.facebook.com/EthanLeo">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="inputLinkedIn" class="form-label">LinkedIn</label>
+                    <input type="text" class="form-control" id="inputLinkedIn" value="https://www.linkedin.com/EthanLeo">
+                  </div>
+                  <div class="col-12">
+                    <label for="inputAbout" class="form-label">About</label>
+                    <textarea class="form-control" id="inputAbout">Ethan Leo is a seasoned and results-driven Project Manager who brings experience and expertise to project management. With a proven track record of successfully delivering complex projects on time and within budget, Ethan Leo is the go-to professional for organizations seeking efficient and effective project leadership.</textarea>
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane fade" id="email-tab-pane" role="tabpanel" aria-labelledby="email-tab" tabindex="0">
+                <form action="#!">
+                  <fieldset class="row gy-3 gy-md-0">
+                    <legend class="col-form-label col-12 col-md-3 col-xl-2">Email Alerts</legend>
+                    <div class="col-12 col-md-9 col-xl-10">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="emailChange">
+                        <label class="form-check-label" for="emailChange">
+                          Email Changed
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="passwordChange">
+                        <label class="form-check-label" for="passwordChange">
+                          Password Changed
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="weeklyNewsletter">
+                        <label class="form-check-label" for="weeklyNewsletter">
+                          Weekly Newsletter
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="productPromotions">
+                        <label class="form-check-label" for="productPromotions">
+                          Product Promotions
+                        </label>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <div class="row">
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane fade" id="password-tab-pane" role="tabpanel" aria-labelledby="password-tab" tabindex="0">
+                <form action="#!">
+                  <div class="row gy-3 gy-xxl-4">
+                    <div class="col-12">
+                      <label for="currentPassword" class="form-label">Current Password</label>
+                      <input type="password" class="form-control" id="currentPassword">
+                    </div>
+                    <div class="col-12">
+                      <label for="newPassword" class="form-label">New Password</label>
+                      <input type="password" class="form-control" id="newPassword">
+                    </div>
+                    <div class="col-12">
+                      <label for="confirmPassword" class="form-label">Confirm Password</label>
+                      <input type="password" class="form-control" id="confirmPassword">
+                    </div>
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-primary">Change Password</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+{% endblock content %}

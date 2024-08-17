@@ -1,0 +1,737 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Shop{% endblock title %}
+{% block content %}
+
+
+<!-- Breadcrumb Start -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a class="breadcrumb-item text-dark" href="{% url 'home' %}">Home</a>
+                <a class="breadcrumb-item text-dark" href="{% url 'shop' %}">Shop</a>
+                <span class="breadcrumb-item active">Shop List</span>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+
+<!-- Shop Start -->
+<div class="container-fluid">
+
+    <div class="row px-xl-5">
+
+    <!-- Shop Sidebar Start -->
+    <div class="col-lg-3 col-md-4">
+
+        <!-- Price Start -->
+        <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
+        <div class="bg-light p-4 mb-30">
+
+            <form action="{% url 'product_by_price' %}" method="GET">
+
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5>All Price</h5>
+                    <span class="badge border font-weight-normal">1000</span>
+                </div>
+                <div class="scrollbox">
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                        <input value="200" name="price" type="submit" class="custom-control-input" id="price-1">
+                        <label class="custom-control-label {% if 'price=200' in request.get_full_path %}text-primary{% endif %}" for="price-1">৳0 - ৳499</label>
+                        <span class="badge border font-weight-normal">150</span>
+                    </div>
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                        <input value="700" name="price" type="submit" class="custom-control-input" id="price-2">
+                        <label class="custom-control-label {% if 'price=700' in request.get_full_path %}text-primary{% endif %}" for="price-2">৳500 - ৳999</label>
+                        <span class="badge border font-weight-normal">295</span>
+                    </div>
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                        <input value="1200" name="price" type="submit" class="custom-control-input" id="price-3">
+                        <label class="custom-control-label {% if 'price=1200' in request.get_full_path %}text-primary{% endif %}" for="price-3">৳1000 - ৳1999</label>
+                        <span class="badge border font-weight-normal">246</span>
+                    </div>
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                        <input value="2500" name="price" type="submit" class="custom-control-input" id="price-4">
+                        <label class="custom-control-label {% if 'price=2500' in request.get_full_path %}text-primary{% endif %}" for="price-4">৳2000 - ৳3999</label>
+                        <span class="badge border font-weight-normal">145</span>
+                    </div>
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
+                    <input value="4001" name="price" type="submit" class="custom-control-input" id="price-5">
+                    <label class="custom-control-label {% if 'price=4001' in request.get_full_path %}text-primary{% endif %}" for="price-5">All</label>
+
+                </div>
+                </div>
+            </form>
+
+        </div>
+        <!-- Price End -->
+
+        <!-- Color Start -->
+        <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by color</span></h5>
+        <div class="bg-light p-4 mb-30">
+            <form action="{% url 'product_by_color' %}" method="get">
+
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5>All Color</h5>
+                    <span class="badge border font-weight-normal">1000</span>
+                </div>
+                <div class="scrollbox">
+                    {% for v in total_color_variation %}
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                        <input name="color" type="submit" value="{{v}}" class="custom-control-input" id="color-{{v}}">
+                        <label class="custom-control-label{% if v in request.get_full_path %} text-primary {% endif %}" for="color-{{v}}">{{v|capfirst}}</label>
+                        <span class="badge border font-weight-normal">150</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </form>
+        </div>
+        <!-- Color End -->
+
+        <!-- Size Start -->
+        <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by size</span></h5>
+        <div class="bg-light p-4 mb-30">
+            <form action="{% url 'product_by_size' %}" method="get">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5>All Size</h5>
+                    <span class="badge border font-weight-normal">1000</span>
+                </div>
+                <div class="scrollbox">
+                    {% for v in total_size_variation %}
+                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                        <input checked name="size" type="submit" value="{{v}}" class="custom-control-input" id="size-{{v}}">
+                        <label class="custom-control-label{% if v in request.get_full_path %} text-primary {% endif %} " for="size-{{v}}">{{v|upper}}</label>
+                        <span class="badge border font-weight-normal">150</span>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </form>
+        </div>
+        <!-- Size End -->
+
+    </div>
+    <!-- Shop Sidebar End -->
+
+    <!-- Shop Product Start -->
+    <div class="col-lg-9 col-md-8">
+        <div class="row pb-3">
+            <div class="col-12 pb-1">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <div class="row d-flex nav">
+                        <a class="border-primary nav-link text-dark product-item" data-toggle="tab" id="grid" href="#grid-1">
+                            <button class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></button>
+                        </a>
+                        <a class="border-primary nav-link text-dark product-item" data-toggle="tab" id="list" href="#list-1">
+                            <button class="btn btn-sm btn-light"><i class="fa fa-bars"></i></button>
+                        </a>
+                        <div class="p-2 ml-2">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
+                                <div class="dropdown-menu dropdown-menu-right nav-sort-by">
+                                    <a onclick="document.getElementById('grid').href='#grid-1',document.getElementById('list').href='#list-1'" class="dropdown-item nav-link text-dark product-item" id="tab-1" data-toggle="tab" href="#latest">Latest</a>
+                                    <a class="dropdown-item nav-link text-dark product-item" id="tab-2" data-toggle="tab" href="#popularity">Popularity</a>
+                                    <a class="dropdown-item nav-link text-dark product-item" id="tab-3" data-toggle="tab" href="#best-rating">Best Rating</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mx-2 text-center mt-1 p-2">
+                            {% if '/shop/' in request.path %}
+                            <i class="fa fa-th-large mx-2"> Total Products</i>
+                            <span class="badge border">{{total}}</span>
+                            {% elif '/wishlist/' in request.path %}
+                            <i class="fa fa-th-large mx-2"> Total Wishlists</i>
+                            <span class="badge border">{{total}}</span>
+                            {% elif '/search/' in request.path %}
+                            <i class="fa fa-th-large mx-2"> Search Products</i>
+                            <span class="badge border">{{total}}</span>
+                            {% else %}
+                            <i class="fa fa-th-large mx-2"> Products Found</i>
+                            <span class="badge border">{{total}}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content col-12">
+
+                <div class="tab-content tab-pane fade show active" id="latest">
+                    <div class="tab-pane fade show active" id="grid-1">
+                        <div class="row">
+
+
+
+                        {% if '/wishlist/' in request.path %}
+                            {% if total_wishlist < 1 %}
+                                <div class="col-lg-12 table-responsive mb-5">
+                                <table class="table table-light table-borderless table-hover text-center mb-0">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th class="col-12">No Products</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="align-middle">
+                                        <tr>
+                                            <td class="col-12">
+                                                <i class="fa fa-exclamation-triangle"></i>
+                                                <a href="{% url 'shop' %}">
+                                                    Visit the Store and Create Your Wish List in our Store
+                                                    <br>Thank You
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% else %}
+                                {% for product in products %}
+                                <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
+                                    <div class="product-item bg-light mb-4">
+                                    <div class="product-img position-relative overflow-hidden">
+                                        <img class="img-fluid w-100" src="{{product.product_image.url}}" alt="">
+                                        <div class="product-action">
+                                            <a class="btn btn-outline-dark btn-square" href="{% url 'shop_details' product.product_slug %}"><i class="fa fa-shopping-cart"></i></a>
+                                            {% if product in wish_box %}
+                                            <a class="btn btn-outline-dark btn-square" href="{% url 'delete_wishlist' product.product_slug %}"><i class="far fa fa-heart"></i></a>
+                                            {% else %}
+                                            <a class="btn btn-outline-dark btn-square" href="{% url 'add_wishlist' product.product_slug %}"><i class="far fa-heart"></i></a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="text-center py-4">
+                                        <a class="h6 text-decoration-none text-truncate" href="{% url 'shop_details' product.product_slug %}">{{product.product_name|truncatechars:20}}</a>
+                                        <div class="d-flex align-items-center justify-content-center mt-2">
+                                            <h5>৳{{product.price}}</h5><h6 class="text-muted ml-2"><del>৳{{product.price}}</del></h6>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-center mb-1">
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small>({{product.in_stocks}})</small>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% elif '/search/' in request.path %}
+                            {% if total < 1 %}
+                                <div class="col-lg-12 table-responsive mb-5">
+                                <table class="table table-light table-borderless table-hover text-center mb-0">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th class="col-12">No Products Founds (0)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="align-middle">
+                                        <tr>
+                                            <td class="col-12">
+                                                <i class="fa fa-exclamation-triangle"></i>
+                                                <a href="{% url 'shop' %}">
+                                                    Visit the Store and Continue Shopping in our Store
+                                                    <br>Thank You
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% else %}
+                                {% for product in products %}
+                                <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
+                                    <div class="product-item bg-light mb-4">
+                                    <div class="product-img position-relative overflow-hidden">
+                                        <img class="img-fluid w-100" src="{{product.product_image.url}}" alt="">
+                                        <div class="product-action">
+                                            <a class="btn btn-outline-dark btn-square" href="{% url 'shop_details' product.product_slug %}"><i class="fa fa-shopping-cart"></i></a>
+                                            {% if product in wish_box %}
+                                            <a class="btn btn-outline-dark btn-square" href="{% url 'delete_wishlist' product.product_slug %}"><i class="far fa fa-heart"></i></a>
+                                            {% else %}
+                                            <a class="btn btn-outline-dark btn-square" href="{% url 'add_wishlist' product.product_slug %}"><i class="far fa-heart"></i></a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="text-center py-4">
+                                        <a class="h6 text-decoration-none text-truncate" href="{% url 'shop_details' product.product_slug %}">{{product.product_name|truncatechars:20}}</a>
+                                        <div class="d-flex align-items-center justify-content-center mt-2">
+                                            <h5>৳{{product.price}}</h5><h6 class="text-muted ml-2"><del>৳{{product.price}}</del></h6>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-center mb-1">
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small>({{product.in_stocks}})</small>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% else %}
+                            {% for product in products %}
+                                <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
+                                    <div class="product-item bg-light mb-4">
+                                    <div class="product-img position-relative overflow-hidden">
+                                        <img class="img-fluid w-100" src="{{product.product_image.url}}" alt="">
+                                        <div class="product-action">
+                                            <a class="btn btn-outline-dark btn-square" href="{% url 'shop_details' product.product_slug %}"><i class="fa fa-shopping-cart"></i></a>
+                                            {% if product in wish_box %}
+                                            <a class="btn btn-outline-dark btn-square" href="{% url 'delete_wishlist' product.product_slug %}"><i class="far fa fa-heart"></i></a>
+                                            {% else %}
+                                            <a class="btn btn-outline-dark btn-square" href="{% url 'add_wishlist' product.product_slug %}"><i class="far fa-heart"></i></a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="text-center py-4">
+                                        <a class="h6 text-decoration-none text-truncate" href="{% url 'shop_details' product.product_slug %}">{{product.product_name|truncatechars:20}}</a>
+                                        <div class="d-flex align-items-center justify-content-center mt-2">
+                                            <h5>৳{{product.price}}</h5><h6 class="text-muted ml-2"><del>৳{{product.price}}</del></h6>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-center mb-1">
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                            <small>({{product.in_stocks}})</small>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                            {% endfor %}
+                        {% endif %}
+
+
+
+
+
+
+                            <div class="col-12">
+                                <nav>
+                  <ul class="pagination justify-content-center">
+                    {% if products.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}"><span>Previous</span></a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link" href="#">&laquo; first</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#"><span>Previous</span></a></li>
+                    {% endif %}
+                    {% for page in total_page %}
+                      {% if "/product_by_price/" in request.path %}
+                    <li class="page-item"><a class="page-link" href="?price={{value}}&page={{page}}">{{page}}</a></li>
+                      {% elif "/search/" in request.path %}
+                    <li class="page-item"><a class="page-link" href="?search_product={{search_value}}&page={{page}}">{{page}}</a></li>
+                      {% else %}
+                      <li class="page-item"><a class="page-link" href="?search_product={{search_value}}&page={{page}}">{{page}}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if products.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ products.paginator.num_pages }}">last &raquo;</a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#">last &raquo;</a></li>
+                    {% endif %}
+                  </ul>
+                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="list-1">
+                        <div class="pl-4 row">
+                            <table class="col-12 table bg-white">
+                              <thead>
+                                <tr>
+                                  <th scope="col" class="col-2">Img</th>
+                                  <th scope="col" class="col-5">Product Name</th>
+                                  <th scope="col" class="col-1">Price</th>
+                                  <th scope="col" class="col-2">Add Cart</th>
+                                  <th scope="col" class="col-2">Wishlist</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              {% for product in products %}
+                                <tr>
+                                  <th scope="row">
+                                      <a class="text-dark" style="text-decoration: none;" href="{% url 'shop_details' product.product_slug %}"><img style="max-height:50px;max-width:50px;" class="img-fluid rounded-circle" src="{{product.product_image.url}}" alt=""></a>
+                                  </th>
+                                  <td>
+                                      <a class="text-dark" style="text-decoration: none;" href="{% url 'shop_details' product.product_slug %}">{{product.product_name|truncatechars:20}}</a>
+                                  </td>
+                                  <td>
+                                      <a class="text-dark" style="text-decoration: none;" href="{% url 'shop_details' product.product_slug %}">{{product.price|floatformat:0}}</a>
+                                  </td>
+                                  <td>
+                                      <a style="text-decoration: none;" class="btn text-dark btn-outline-dark btn-square" href="{% url 'shop_details' product.product_slug %}">
+                                          <i class="fa fa-shopping-cart"></i>
+                                      </a>
+                                  </td>
+                                  <td>
+                                      {% if product in wish_box %}
+                                        <a class="btn btn-outline-dark btn-square" href="{% url 'delete_wishlist' product.product_slug %}">
+                                            <i class="far fa fa-heart"></i>
+                                        </a>
+                                        {% else %}
+                                        <a class="btn btn-outline-dark btn-square" href="{% url 'add_wishlist' product.product_slug %}">
+                                            <i class="far fa-heart"></i>
+                                        </a>
+                                        {% endif %}
+                                  </td>
+                                </tr>
+                              {% endfor %}
+                              </tbody>
+                            </table>
+                            <div class="col-12">
+                            <nav>
+                              <ul class="pagination justify-content-center">
+                                {% if products.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                                <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}"><span>Previous</span></a></li>
+                                {% else %}
+                                <li class="page-item disabled"><a class="page-link" href="#">&laquo; first</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="#"><span>Previous</span></a></li>
+                                {% endif %}
+                                {% for page in total_page %}
+                                  {% if "/product_by_price/" in request.path %}
+                                <li class="page-item"><a class="page-link" href="?price={{value}}&page={{page}}">{{page}}</a></li>
+                                      {% elif "/search/" in request.path %}
+                                <li class="page-item"><a class="page-link" href="?search_product={{search_value}}&page={{page}}">{{page}}</a></li>
+                                  {% else %}
+                                  <li class="page-item"><a class="page-link" href="?search_product={{search_value}}&page={{page}}">{{page}}</a></li>
+                                  {% endif %}
+                                {% endfor %}
+                                {% if products.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
+                                <li class="page-item"><a class="page-link" href="?page={{ products.paginator.num_pages }}">last &raquo;</a></li>
+                                {% else %}
+                                <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="#">last &raquo;</a></li>
+                                {% endif %}
+                              </ul>
+                            </nav>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content tab-pane fade" id="popularity">
+                     <div class="tab-pane fade show active" id="grid-2">
+                        <div class="row">
+                            {% for product in products %}
+                            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                                <div class="product-item bg-light mb-4">
+                                <div class="product-img position-relative overflow-hidden">
+                                    <img class="img-fluid w-100" src="{{product.product_image.url}}" alt="">
+                                    <div class="product-action">
+                                        <a class="btn btn-outline-dark btn-square" href="{% url 'shop_details' product.product_slug %}"><i class="fa fa-shopping-cart"></i></a>
+                                        {% if product in wish_box %}
+                                        <a class="btn btn-outline-dark btn-square" href="{% url 'delete_wishlist' product.product_slug %}"><i class="far fa fa-heart"></i></a>
+                                        {% else %}
+                                        <a class="btn btn-outline-dark btn-square" href="{% url 'add_wishlist' product.product_slug %}"><i class="far fa-heart"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="text-center py-4">
+                                    <a class="h6 text-decoration-none text-truncate" href="{% url 'shop_details' product.product_slug %}">{{product.product_name|truncatechars:20}}</a>
+                                    <div class="d-flex align-items-center justify-content-center mt-2">
+                                        <h5>৳{{product.price}}</h5><h6 class="text-muted ml-2"><del>৳{{product.price}}</del></h6>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center mb-1">
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small>({{product.in_stocks}})</small>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                            {% endfor %}
+                            <div class="col-12">
+                                <nav>
+                  <ul class="pagination justify-content-center">
+                    {% if products.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}"><span>Previous</span></a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link" href="#">&laquo; first</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#"><span>Previous</span></a></li>
+                    {% endif %}
+                    {% for page in total_page %}
+                      {% if "/product_by_price/" in request.path %}
+                    <li class="page-item"><a class="page-link" href="?price={{value}}&page={{page}}">{{page}}</a></li>
+                      {% elif "/search/" in request.path %}
+                    <li class="page-item"><a class="page-link" href="?search_product={{search_value}}&page={{page}}">{{page}}</a></li>
+                      {% else %}
+                      <li class="page-item"><a class="page-link" href="?search_product={{search_value}}&page={{page}}">{{page}}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if products.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ products.paginator.num_pages }}">last &raquo;</a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#">last &raquo;</a></li>
+                    {% endif %}
+                  </ul>
+                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="list-2">
+                        <div class="pl-4 row">
+                            <table class="col-12 table bg-white">
+                              <thead>
+                                <tr>
+                                  <th scope="col" class="col-1">Img</th>
+                                  <th scope="col" class="col-3">Product Name</th>
+                                  <th scope="col" class="col-1">Price</th>
+                                  <th scope="col" class="col-1">Add Cart</th>
+                                  <th scope="col" class="col-1">Wishlist</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              {% for product in products %}
+                                <tr>
+                                  <th scope="row">
+                                      <a class="text-dark" style="text-decoration: none;" href="{% url 'shop_details' product.product_slug %}"><img style="max-height:50px;max-width:50px;" class="img-fluid rounded-circle" src="{{product.product_image.url}}" alt=""></a>
+                                  </th>
+                                  <td>
+                                      <a class="text-dark" style="text-decoration: none;" href="{% url 'shop_details' product.product_slug %}">{{product.product_name|truncatechars:20}}</a>
+                                  </td>
+                                  <td>
+                                      <a class="text-dark" style="text-decoration: none;" href="{% url 'shop_details' product.product_slug %}">{{product.price|floatformat:0}}</a>
+                                  </td>
+                                  <td>
+                                      <a style="text-decoration: none;" class="btn text-dark btn-outline-dark btn-square" href="{% url 'shop_details' product.product_slug %}">
+                                          <i class="fa fa-shopping-cart"></i>
+                                      </a>
+                                  </td>
+                                  <td>
+                                      {% if product in wish_box %}
+                                        <a class="btn btn-outline-dark btn-square" href="{% url 'delete_wishlist' product.product_slug %}">
+                                            <i class="far fa fa-heart"></i>
+                                        </a>
+                                        {% else %}
+                                        <a class="btn btn-outline-dark btn-square" href="{% url 'add_wishlist' product.product_slug %}">
+                                            <i class="far fa-heart"></i>
+                                        </a>
+                                        {% endif %}
+                                  </td>
+                                </tr>
+                              {% endfor %}
+                              </tbody>
+                            </table>
+                            <div class="col-12">
+                            <nav>
+                              <ul class="pagination justify-content-center">
+                                {% if products.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                                <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}"><span>Previous</span></a></li>
+                                {% else %}
+                                <li class="page-item disabled"><a class="page-link" href="#">&laquo; first</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="#"><span>Previous</span></a></li>
+                                {% endif %}
+                                {% for page in total_page %}
+                                  {% if "/product_by_price/" in request.path %}
+                                <li class="page-item"><a class="page-link" href="?price={{value}}&page={{page}}">{{page}}</a></li>
+                                  {% elif "/search/" in request.path %}
+                                <li class="page-item"><a class="page-link" href="?search_product={{search_value}}&page={{page}}">{{page}}</a></li>
+                                  {% else %}
+                                  <li class="page-item"><a class="page-link" href="?search_product={{search_value}}&page={{page}}">{{page}}</a></li>
+                                  {% endif %}
+                                {% endfor %}
+                                {% if products.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
+                                <li class="page-item"><a class="page-link" href="?page={{ products.paginator.num_pages }}">last &raquo;</a></li>
+                                {% else %}
+                                <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="#">last &raquo;</a></li>
+                                {% endif %}
+                              </ul>
+                            </nav>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content tab-pane fade" id="best-rating">
+                     <div class="tab-pane fade show active" id="grid-3">
+                        <div class="row">
+                            {% for product in products %}
+                            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                                <div class="product-item bg-light mb-4">
+                                <div class="product-img position-relative overflow-hidden">
+                                    <img class="img-fluid w-100" src="{{product.product_image.url}}" alt="">
+                                    <div class="product-action">
+                                        <a class="btn btn-outline-dark btn-square" href="{% url 'shop_details' product.product_slug %}"><i class="fa fa-shopping-cart"></i></a>
+                                        {% if product in wish_box %}
+                                        <a class="btn btn-outline-dark btn-square" href="{% url 'delete_wishlist' product.product_slug %}"><i class="far fa fa-heart"></i></a>
+                                        {% else %}
+                                        <a class="btn btn-outline-dark btn-square" href="{% url 'add_wishlist' product.product_slug %}"><i class="far fa-heart"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="text-center py-4">
+                                    <a class="h6 text-decoration-none text-truncate" href="{% url 'shop_details' product.product_slug %}">{{product.product_name|truncatechars:20}}</a>
+                                    <div class="d-flex align-items-center justify-content-center mt-2">
+                                        <h5>৳{{product.price}}</h5><h6 class="text-muted ml-2"><del>৳{{product.price}}</del></h6>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center mb-1">
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small>({{product.in_stocks}})</small>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                            {% endfor %}
+                            <div class="col-12">
+                                <nav>
+                  <ul class="pagination justify-content-center">
+                    {% if products.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}"><span>Previous</span></a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link" href="#">&laquo; first</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#"><span>Previous</span></a></li>
+                    {% endif %}
+                    {% for page in total_page %}
+                      {% if "/product_by_price/" in request.path %}
+                    <li class="page-item"><a class="page-link" href="?price={{value}}&page={{page}}">{{page}}</a></li>
+                      {% elif "/search/" in request.path %}
+                    <li class="page-item"><a class="page-link" href="?search_product={{search_value}}&page={{page}}">{{page}}</a></li>
+                      {% else %}
+                      <li class="page-item"><a class="page-link" href="?search_product={{search_value}}&page={{page}}">{{page}}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if products.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ products.paginator.num_pages }}">last &raquo;</a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#">last &raquo;</a></li>
+                    {% endif %}
+                  </ul>
+                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="list-3">
+                        <div class="pl-4 row">
+                            <table class="col-12 table bg-white">
+                              <thead>
+                                <tr>
+                                  <th scope="col" class="col-1">Img</th>
+                                  <th scope="col" class="col-3">Product Name</th>
+                                  <th scope="col" class="col-1">Price</th>
+                                  <th scope="col" class="col-1">Add Cart</th>
+                                  <th scope="col" class="col-1">Wishlist</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              {% for product in products %}
+                                <tr>
+                                  <th scope="row">
+                                      <a class="text-dark" style="text-decoration: none;" href="{% url 'shop_details' product.product_slug %}"><img style="max-height:50px;max-width:50px;" class="img-fluid rounded-circle" src="{{product.product_image.url}}" alt=""></a>
+                                  </th>
+                                  <td>
+                                      <a class="text-dark" style="text-decoration: none;" href="{% url 'shop_details' product.product_slug %}">{{product.product_name|truncatechars:20}}</a>
+                                  </td>
+                                  <td>
+                                      <a class="text-dark" style="text-decoration: none;" href="{% url 'shop_details' product.product_slug %}">{{product.price|floatformat:0}}</a>
+                                  </td>
+                                  <td>
+                                      <a style="text-decoration: none;" class="btn text-dark btn-outline-dark btn-square" href="{% url 'shop_details' product.product_slug %}">
+                                          <i class="fa fa-shopping-cart"></i>
+                                      </a>
+                                  </td>
+                                  <td>
+                                      {% if product in wish_box %}
+                                        <a class="btn btn-outline-dark btn-square" href="{% url 'delete_wishlist' product.product_slug %}">
+                                            <i class="far fa fa-heart"></i>
+                                        </a>
+                                        {% else %}
+                                        <a class="btn btn-outline-dark btn-square" href="{% url 'add_wishlist' product.product_slug %}">
+                                            <i class="far fa-heart"></i>
+                                        </a>
+                                        {% endif %}
+                                  </td>
+                                </tr>
+                              {% endfor %}
+                              </tbody>
+                            </table>
+                            <div class="col-12">
+                            <nav>
+                              <ul class="pagination justify-content-center">
+                                {% if products.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                                <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}"><span>Previous</span></a></li>
+                                {% else %}
+                                <li class="page-item disabled"><a class="page-link" href="#">&laquo; first</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="#"><span>Previous</span></a></li>
+                                {% endif %}
+                                {% for page in total_page %}
+                                  {% if "/product_by_price/" in request.path %}
+                                <li class="page-item"><a class="page-link" href="?price={{value}}&page={{page}}">{{page}}</a></li>
+                                  {% elif "/search/" in request.path %}
+                                <li class="page-item"><a class="page-link" href="?search_product={{search_value}}&page={{page}}">{{page}}</a></li>
+                                  {% else %}
+                                  <li class="page-item"><a class="page-link" href="?search_product={{search_value}}&page={{page}}">{{page}}</a></li>
+                                  {% endif %}
+                                {% endfor %}
+                                {% if products.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
+                                <li class="page-item"><a class="page-link" href="?page={{ products.paginator.num_pages }}">last &raquo;</a></li>
+                                {% else %}
+                                <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="#">last &raquo;</a></li>
+                                {% endif %}
+                              </ul>
+                            </nav>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Shop Product End -->
+</div>
+<!-- Shop End -->
+</div>
+
+
+{% endblock content %}
+
+{% block script %}
+
+<script>
+var gr = document.getElementById("grid")
+var li = document.getElementById("list")
+$("#tab-2").on("click", function(){
+ gr.href='#grid-2';
+ li.href='#list-2';
+})
+</script>
+
+<script>
+var gr = document.getElementById("grid")
+var li = document.getElementById("list")
+$("#tab-3").on("click", function(){
+ gr.href='#grid-3';
+ li.href='#list-3';
+})
+</script>
+
+{% endblock script %}

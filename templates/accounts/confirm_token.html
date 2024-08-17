@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Account{% endblock title %}
+{% block content %}
+
+<!-- Breadcrumb Start -->
+<div class="container-fluid">
+	<div class="row px-xl-5">
+		<div class="col-12">
+			<nav class="breadcrumb bg-light mb-30">
+				<a class="breadcrumb-item text-dark" href="{% url 'home' %}"><i class="fa fa-home mx-2 pt-1"></i>Home</a>
+				<span class="breadcrumb-item text-primary">Account</span>
+			</nav>
+		</div>
+	</div>
+</div>
+<!-- Breadcrumb End -->
+
+<!--Login form -->
+<section class="section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-12">
+					<div class="wrap d-flex">
+						<div class="col-md-6 img" style="background-image: url({%static 'img/bg-1.jpg' %});border-radius:25px 0 0 25px;"></div>
+
+						<div class="col-md-6" style="background: #b7b7b152;border-radius:0 25px 25px 0;">
+							<div class="p-4">
+								<div class="row d-flex justify-content-center">
+									<div class="d-flex justify-content-center">
+										<div class="row">
+											<h3 class="mb-4">Please check your Email<i class="fa fa-envelope mx-2"></i></h3>
+										</div>
+									</div>
+									<form action="" method="POST" class="signin-form">
+										{% csrf_token %}
+                                        <div class="row d-flex justify-content-end align-items-center">
+                                            <div class="col-md-12 form-group d-flex justify-content-center align-items-center">
+                                                <h1 class="mb-0 mx-2"><label class="mb-0">CODE</label></h1>
+                                                <input class="form-control mb-0 rounded" name="email_token" type="text" required>
+                                            </div>
+                                            <div class="col-md-9 form-group py-2">
+                                            <button type="submit" class="form-control btn btn-primary rounded submit px-3">Code</button>
+                                        </div>
+                                        </div>
+                                    </form>
+		        				</div>
+							</div>
+						</div>
+
+		      		</div>
+				</div>
+			</div>
+		</div>
+	</section>
+<!--Login form -->
+
+
+
+{% endblock content %}
+
+{% block script %}
+<script>
+$('#eye_button').on('click','.toggle-password',function(){
+
+    var input = $("#password_log").attr("type");
+
+    if (input.attr("type") === "password") {
+        input.attr("type", "text");
+    } else {
+        input.attr("type", "password");
+    }
+});
+</script>
+{% endblock script %}
